@@ -49,6 +49,18 @@ name. You can do differently as you fancy it:
     Command successful.
     $ mkfs -t ext4 /dev/mapper/crypt_vol
 
+## Optional: Securing the data
+You can now mount your encrypted volume and copy the data onto it.
+
+    $ mkdir /mnt/crypt_mnt
+    $ mount /dev/mapper/crypt_vol /mnt/crypt_mnt
+    $ cp -a <your_data> /mnt/crypt_mnt
+
+Once done, you can also erase your old data, either with `shred` or alike, or
+more brutally with `dd` or `badblocks`(see above) on the whole volume where
+your data reside (**WARNING** You might lose some data if you don't proceed
+carefully).
+
 ## Mounting the new volume at boot time
 To mount the encrypted volume at boot time, you will need to create (or add to)
 the `/etc/crypttab` file the following:
@@ -77,16 +89,4 @@ issue the following commands:
         └─crypt_vol                 ?:?    0    10G  0 crypt /mnt/crypt_mnt
     $
 
-
-## Optional: Securing the data
-You can now mount your encrypted volume and copy the data onto it.
-
-    $ mkdir /mnt/crypt_mnt
-    $ mount /dev/mapper/crypt_vol /mnt/crypt_mnt
-    $ cp -a <your_data> /mnt/crypt_mnt
-
-Once done, you can also erase your old data, either with `shred` or alike, or
-more brutally with `dd` or `badblocks`(see above) on the whole volume where
-your data reside (**WARNING** You might lose some data if you don't proceed
-carefully).
 
