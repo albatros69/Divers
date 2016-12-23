@@ -80,6 +80,7 @@ issue the following commands:
 
 ## Optional: Securing the data
 You can now mount your encrypted volume and copy the data onto it.
+
     $ mkdir /mnt/crypt_mnt
     $ mount /dev/mapper/crypt_vol /mnt/crypt_mnt
     $ cp -a <your_data> /mnt/crypt_mnt
