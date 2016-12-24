@@ -74,10 +74,10 @@ If everything is correct, you can now copy your data on the encrypted volume:
 
     $ cp -a <your_data> /mnt/crypt_mnt
 
-Once done, you can also erase your old data, either with `shred` or alike, or
-more brutally with `dd` or `badblocks`(see above) on the whole volume where
-your data reside. **WARNING** You might lose some data if you don't proceed
-carefully: Backups are your friends here!
+Once done, you should also erase securely your old data, either with `shred` or
+alike, or more brutally with `dd` or `badblocks`(see above) on the whole volume
+where your data reside. **WARNING** You might lose some data if you don't
+proceed carefully: Backups are your friends here!
 
 ## Mounting the new volume at boot time
 To mount the encrypted volume at boot time, you will need to create (or add to)
