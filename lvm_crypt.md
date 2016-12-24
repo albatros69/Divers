@@ -31,7 +31,7 @@ Now we have to setup the encryption on the new volume. The passphrase here is us
     $ cryptsetup luksFormat --cipher aes-xts-plain64 --key-size 256 --hash sha256 /dev/vg_name/crypt_lv
     WARNING!
     ========
-    This will overwrite data on /dev/mapper/VolGroup00-myvolume irrevocably.
+    This will overwrite data on /dev/vg_name/crypt_lv irrevocably.
     
     Are you sure? (Type uppercase yes): YES
     Enter LUKS passphrase:
