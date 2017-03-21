@@ -13,7 +13,7 @@ apply successfully... So I combined a few of them and decided to write my own.
 Hope this helps!
 
 ## The environment
-I will suppose you have a working LVM setup, with an existing VG name
+I will suppose you have a working LVM setup, with an existing VG named
 `vg_name`. On Debian, it's usually named against the hostname if it has been
 created by the installer. We also need some free space for the new LV. Let's
 create a new `crypt_lv` LV:
@@ -26,7 +26,8 @@ e.g.). Once created, we will erase everything on the new volume for good measure
     $ badblocks -c 10240 -s -w -t random -v /dev/vg_name/crypt_lv
 
 ## Where the encryption starts...
-Now we have to setup the encryption on the new volume. The passphrase here is used to protect the cypher key. You will be able to change it later if needed.
+Now we have to setup the encryption on the new volume. The passphrase here is used 
+to protect the cypher key. You will be able to change it later if needed.
 
     $ cryptsetup luksFormat --cipher aes-xts-plain64 --key-size 256 --hash sha256 /dev/vg_name/crypt_lv
     WARNING!
