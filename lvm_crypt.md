@@ -8,7 +8,7 @@ While I could have reinstalled it from scratch, I thought it would be quicker
 to simply create a new LV and move the sensible data onto it (essentially /home).
 
 I've been proved wrong, as I didn't find a tutorial to explain how to do this.
-I found documentation to encrypt a whole VG, or other which I didn't manage to
+I found documentation to encrypt a whole VG, or others which I didn't manage to
 apply successfully... So I combined a few of them and decided to write my own.
 Hope this helps!
 
