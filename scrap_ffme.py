@@ -1,13 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from __future__ import (unicode_literals, absolute_import, print_function, division)
+from __future__ import (absolute_import, division, print_function,
+                        unicode_literals)
+
+from datetime import datetime
+from os import environ
 
 from requests import get
+
 from bs4 import BeautifulSoup, NavigableString
-from datetime.datetime import strptime
 from icalendar import Calendar, Event
 
+# Pour faire du TLS1.0...
+environ["OPENSSL_CONF"] = "openssl.cnf"
 
 def scrape_url(url):
     page = get(url)
@@ -30,9 +36,9 @@ def create_event_formation(d):
     dates = tuple(d['Date'].stripped_strings)
     num = ''.join(d['N°'].stripped_strings)
     event.add('summary',     ' '.join(d['Nom'].stripped_strings))
-    event.add('dtstart',     strptime(dates[0], '%d/%m/%y'))
+    event.add('dtstart',     datetime.strptime(dates[0], '%d/%m/%y'))
     if len(dates) > 1:
-        event.add('dtend',   strptime(dates[1], '%d/%m/%y'))
+        event.add('dtend',   datetime.strptime(dates[1], '%d/%m/%y'))
     event.add('location',    ' '.join(d['Lieu'].stripped_strings).replace("\r\n", ' '))
     event.add('uid', "%s@formation.ffme.fr" % (num,) )
     event.add('description', 'http://www.ffme.fr/formation/fiche-evenement/%s.html' % (num, ))
@@ -47,9 +53,9 @@ def create_event_compet(d):
     link = 'http://www.ffme.fr'+d['Nom de la compétition Lieu'].a.get('href')
     event.add('summary',     nom_lieu[0])
     event.add('location',    nom_lieu[1])
-    event.add('dtstart',     strptime(dates[0], '%d/%m/%y'))
+    event.add('dtstart',     datetime.strptime(dates[0], '%d/%m/%y'))
     if len(dates) > 1:
-        event.add('dtend',   strptime(dates[1], '%d/%m/%y'))
+        event.add('dtend',   datetime.strptime(dates[1], '%d/%m/%y'))
     event.add('uid', "%s@competition.ffme.fr" % (''.join(( a for a in link if a.isdigit())),) )
     event.add('description', link)
 
@@ -71,7 +77,7 @@ for u in urls:
         cal.add_component(create_event_formation(d))
 
 with open('cal_formation.ics', 'w') as f:
-   f.write(cal.to_ical())
+   f.write(cal.to_ical().decode('utf-8'))
 
 cal = Calendar()
 cal.add('prodid', '-//Calendrier compétitions FFME//ffme.fr//')
@@ -89,5 +95,4 @@ while True:
     page +=1
 
 with open('cal_competition.ics', 'w') as f:
-   f.write(cal.to_ical())
-
+   f.write(cal.to_ical().decode('utf-8'))
