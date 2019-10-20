@@ -5,7 +5,7 @@ from __future__ import (unicode_literals, absolute_import, print_function, divis
 
 from requests import get
 from bs4 import BeautifulSoup, NavigableString
-from datetime import datetime
+from datetime.datetime import strptime
 from icalendar import Calendar, Event
 
 
@@ -30,11 +30,11 @@ def create_event_formation(d):
     dates = tuple(d['Date'].stripped_strings)
     num = ''.join(d['N°'].stripped_strings)
     event.add('summary',     ' '.join(d['Nom'].stripped_strings))
-    event.add('dtstart',     datetime.strptime(dates[0], '%d/%m/%y'))
+    event.add('dtstart',     strptime(dates[0], '%d/%m/%y'))
     if len(dates) > 1:
-        event.add('dtend',   datetime.strptime(dates[1], '%d/%m/%y'))
+        event.add('dtend',   strptime(dates[1], '%d/%m/%y'))
     event.add('location',    ' '.join(d['Lieu'].stripped_strings).replace("\r\n", ' '))
-    event.add('uid',         num)
+    event.add('uid', "%s@formation.ffme.fr" % (num,) )
     event.add('description', 'http://www.ffme.fr/formation/fiche-evenement/%s.html' % (num, ))
 
     return event
@@ -47,10 +47,10 @@ def create_event_compet(d):
     link = 'http://www.ffme.fr'+d['Nom de la compétition Lieu'].a.get('href')
     event.add('summary',     nom_lieu[0])
     event.add('location',    nom_lieu[1])
-    event.add('dtstart',     datetime.strptime(dates[0], '%d/%m/%y'))
+    event.add('dtstart',     strptime(dates[0], '%d/%m/%y'))
     if len(dates) > 1:
-        event.add('dtend',   datetime.strptime(dates[1], '%d/%m/%y'))
-    event.add('uid',         ''.join(( a for a in link if a.isdigit())))
+        event.add('dtend',   strptime(dates[1], '%d/%m/%y'))
+    event.add('uid', "%s@competition.ffme.fr" % (''.join(( a for a in link if a.isdigit())),) )
     event.add('description', link)
 
     return event
