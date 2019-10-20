@@ -13,8 +13,10 @@ from icalendar import Calendar, Event
 
 
 def extract_date(entity):
-    date = entity.find("div", class_="day").span
-    return datetime.strptime(date["content"], "%Y-%m-%dT%H:%M:%S%z")
+    date = entity.find("div", class_="day").span["content"]
+    if date[-3] == ':':
+        date = date[:-3] + date[-2:]
+    return datetime.strptime(date, "%Y-%m-%dT%H:%M:%S%z")
 
 
 def scrape_url(url):
