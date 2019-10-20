@@ -14,9 +14,7 @@ from icalendar import Calendar, Event
 
 def extract_date(entity):
     date = entity.find("div", class_="day").span["content"]
-    if date[-3] == ':':
-        date = date[:-3] + date[-2:]
-    return datetime.strptime(date, "%Y-%m-%dT%H:%M:%S%z")
+    return datetime.strptime(date[:10], "%Y-%m-%d").date()
 
 
 def scrape_url(url):
@@ -51,7 +49,7 @@ def create_event(d):
     event = Event()
     event.add("summary", d["title"])
     event.add("dtstart", d["date-start"])
-    event.add("dtend", d["date-start"] + timedelta(days=3))
+    event.add("dtend", d["date-start"] + timedelta(days=4))
     event.add("location", d["location"])
     event.add("uid", "%s@europa.eu" % (md5(d["url"].encode("ascii")).hexdigest(),))
     event.add("description", "https://europa.eu%s" % (d["url"],))

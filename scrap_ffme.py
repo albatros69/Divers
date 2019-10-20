@@ -36,9 +36,9 @@ def create_event_formation(d):
     dates = tuple(d['Date'].stripped_strings)
     num = ''.join(d['N°'].stripped_strings)
     event.add('summary',     ' '.join(d['Nom'].stripped_strings))
-    event.add('dtstart',     datetime.strptime(dates[0], '%d/%m/%y'))
+    event.add('dtstart',     datetime.strptime(dates[0], '%d/%m/%y').date())
     if len(dates) > 1:
-        event.add('dtend',   datetime.strptime(dates[1], '%d/%m/%y'))
+        event.add('dtend',   datetime.strptime(dates[1], '%d/%m/%y').date())
     event.add('location',    ' '.join(d['Lieu'].stripped_strings).replace("\r\n", ' '))
     event.add('uid', "%s@formation.ffme.fr" % (num,) )
     event.add('description', 'http://www.ffme.fr/formation/fiche-evenement/%s.html' % (num, ))
@@ -53,9 +53,9 @@ def create_event_compet(d):
     link = 'http://www.ffme.fr'+d['Nom de la compétition Lieu'].a.get('href')
     event.add('summary',     nom_lieu[0])
     event.add('location',    nom_lieu[1])
-    event.add('dtstart',     datetime.strptime(dates[0], '%d/%m/%y'))
+    event.add('dtstart',     datetime.strptime(dates[0], '%d/%m/%y').date())
     if len(dates) > 1:
-        event.add('dtend',   datetime.strptime(dates[1], '%d/%m/%y'))
+        event.add('dtend',   datetime.strptime(dates[1], '%d/%m/%y').date())
     event.add('uid', "%s@competition.ffme.fr" % (''.join(( a for a in link if a.isdigit())),) )
     event.add('description', link)
 
