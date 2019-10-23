@@ -60,11 +60,17 @@ def create_event(d):
 cal = Calendar()
 cal.add("prodid", "-//Calendrier Parlement Européen//europa.eu//")
 cal.add("version", "2.0")
+cal.add("X-WR-CALNAME", "Calendrier Parlement Européen")
 
-for d in scrape_url(
-    "https://europa.eu/newsroom/events/year_fr?field_nr_events_by_topic_tid=All&field_nr_event_source_tid=51&field_nr_event_type_tid=All"
-):
-    cal.add_component(create_event(d))
+page = 0
+url = "https://europa.eu/newsroom/events/year_fr?field_nr_events_by_topic_tid=All&field_nr_event_source_tid=51&field_nr_event_type_tid=All"
+while True:
+    data = scrape_url(url + "&page=" + repr(page))
+    if not data:
+        break
+    for d in data:
+        cal.add_component(create_event(d))
+    page +=1
 
 with open("cal_euparl.ics", "w") as f:
     f.write(cal.to_ical().decode("utf-8"))
