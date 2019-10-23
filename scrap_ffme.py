@@ -65,6 +65,7 @@ def create_event_compet(d):
 cal = Calendar()
 cal.add('prodid', '-//Calendrier formations FFME//ffme.fr//')
 cal.add('version', '2.0')
+cal.add("X-WR-CALNAME", "Calendrier formations FFME")
 
 urls = ('http://www.ffme.fr/formation/calendrier-liste/FMT_ESCSAE.html',
         'http://www.ffme.fr/formation/calendrier-liste/FMT_ESCSNE.html',
@@ -82,6 +83,7 @@ with open('cal_formation.ics', 'w') as f:
 cal = Calendar()
 cal.add('prodid', '-//Calendrier compétitions FFME//ffme.fr//')
 cal.add('version', '2.0')
+cal.add("X-WR-CALNAME", "Calendrier compétitions FFME")
 
 url = 'http://www.ffme.fr/competition/calendrier-liste.html?DISCIPLINE=ESC&CPT_FUTUR=1'
 
