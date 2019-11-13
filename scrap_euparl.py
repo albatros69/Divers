@@ -36,6 +36,9 @@ def scrape_url(url):
                     "date-start": extract_date(
                         row.find("div", class_="event-date-start")
                     ),
+                    "date-end": extract_date(
+                        row.find("div", class_="event-date-end")
+                    ),
                     "location": location,
                     "title": "".join(title.stripped_strings),
                     "url": title.a["href"],
