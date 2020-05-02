@@ -22,8 +22,6 @@ class Cell:
             return set()
         else:
             return set(range(1, 10)) - self.row - self.col - self.sq - self.rm_values
-            #return [ x for x in range(1, 10)
-                    #if x not in self.row and x not in self.col and x not in self.sq ]
 
     def set(self, val):
         if val > 0:
@@ -46,7 +44,6 @@ class Cell:
             return ' '
         else:
             return repr(self.value)
-        #return "%r: %r %r %r %r" % (self.value, self.row, self.col, self.sq, self.values)
 
 
 def carre(i,j):
