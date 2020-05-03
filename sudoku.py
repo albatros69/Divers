@@ -2,6 +2,7 @@
 
 from __future__ import (unicode_literals, absolute_import, print_function, division)
 
+from copy import deepcopy
 from itertools import combinations
 
 class Cell:
@@ -328,6 +329,13 @@ s = Sudoku((
 ))
 print("%r" % s)
 s.solve()
+# if not s.solved:
+#     candidates = ([ (i,j,s.grid[i,j].values) for i in range(9) for j in range(9) ])
+#     for (i,j,vals) in candidates:
+#         for v in vals:
+#             option = deepcopy(s)
+#             option.set(i,j,v)
+#             option.solve()
 
 # s = Sudoku((
 #         (0,3,0,0,0,0,0,0,7),
@@ -416,6 +424,13 @@ print("%r" % s)
 # s.rech_gpes_camoufles() ; print()
 # s.rech_gpes_camoufles() ; print()
 s.solve()
+# if not s.solved:
+#     candidates = ([ (i,j,s.grid[i,j].values) for i in range(9) for j in range(9) ])
+#     for (i,j,vals) in candidates:
+#         for v in vals:
+#             option = deepcopy(s)
+#             option.set(i,j,v)
+#             option.solve()
 
 # s = Sudoku((
 #     (0,3,0,0,0,0,0,0,7),
