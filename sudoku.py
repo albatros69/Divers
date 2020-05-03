@@ -273,7 +273,7 @@ class Sudoku:
             #raw_input("Press Enter to continue...")
         print("\n%r\n###### Résolu: %s en %d coups #######" % (self, self.solved, self.turns))
         # if not self.solved:
-        #     print([ (i,j,s.grid[i,j].values) for i in range(9) for j in range(9) ])
+        #     print([ (i,j,self.grid[i,j].values) for i in range(9) for j in range(9) ])
 
 
 # s = Sudoku()
