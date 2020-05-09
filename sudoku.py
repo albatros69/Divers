@@ -186,9 +186,9 @@ class Sudoku:
         for v in range(1, 10):
             candidates = [ (i,j) for i in range(9) for j in range(9) if v in self.grid[i,j].values ]
             for candidat in candidates:
-                for k in (0, 1):
-                    copains = [ a for a in candidates if a[k]==candidat[k] and are_neigh(*candidat,*a) >= 2 ]
-                    candid_mince = [ a for a in candidates if a[k]==candidat[k] and a not in copains ]
+                for dim in (0, 1): # colonne/ligne
+                    copains = [ a for a in candidates if a[dim]==candidat[dim] and are_neigh(*candidat,*a) >= 2 ]
+                    candid_mince = [ a for a in candidates if a[dim]==candidat[dim] and a not in copains ]
                     candid_sq = [ a for a in candidates if carre(*a)==carre(*candidat) and a not in copains ]
                     if not candid_mince:
                         for cell in candid_sq:
@@ -239,13 +239,13 @@ class Sudoku:
                 values_count[1][j][v].add((i,j))
                 values_count[2][carre(i,j)][v].add((i,j))
 
-        for dim in (0, 1, 2):
+        for dim in (0, 1, 2): # colonne/ligne/carré
             for k in range(9):
                 count_values =  [ {'vals': set((v, )), 'cells': c} for (v,c) in values_count[dim][k].items() if len(c) > 1 ]
                 # len(c) = 0 correspond aux valeurs fixées. Et 1 au solitaire nu...
 
                 all_combinations = []
-                for n in range(1,5): # On limite au quatuor (suffisant d'après la doc)
+                for n in range(1,5): # On limite au quatuor (si un quintet existe, il y aura aussi un quatuor complémentaire (5+4=9 cases)
                     all_combinations += combinations(count_values, n)
                 all_count_values = []
                 for glop in all_combinations:
