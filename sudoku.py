@@ -267,6 +267,37 @@ class Sudoku:
 
         return chgt
 
+    def rech_reseaux(self):
+        chgt = False
+        for v in range(1, 10):
+            candidates = [ (i,j) for i in range(9) for j in range(9) if v in self.grid[i,j].values ]
+
+            for dim in (0, 1): # colonne/ligne
+                other_dim = int(not dim)
+                current_dims = { i: set() for i in range(9) }
+                for a in candidates:
+                    current_dims[a[dim]].add(a[other_dim])
+
+                all_combinations = []
+                for n in range(1,5): # On limite au quatuor (si un quintet existe, il y aura aussi un quatuor complémentaire (5+4=9 cases)
+                    all_combinations += combinations([ ({i}, current_dims[i]) for i in current_dims if current_dims[i] ], n)
+
+                for combin in all_combinations:
+                    current_dim = set()
+                    current_other_dim = set()
+                    for c in combin:
+                        current_dim |= c[0]
+                        current_other_dim |= c[1]
+
+                    if len(current_dim) == len(current_other_dim):
+                        for a in [ a for a in candidates if a[dim] not in current_dim and a[other_dim] in current_other_dim ]:
+                            print("%d,%d *> -%d |" % (*a, v), end=' ')
+                            self.grid[a].rm_value(v)
+                            chgt = True
+                            self.turns += 1
+
+        return chgt
+
     def solve(self):
         # https://fr.wikibooks.org/wiki/Résolution_de_casse-têtes/Résolution_du_sudoku
         chgt = (True, )
@@ -280,6 +311,7 @@ class Sudoku:
                     self.rech_gpes_dominants(),
                     self.rech_gpes_nus(),
                     self.rech_gpes_camoufles(),
+                    self.rech_reseaux(),
                 )
 
             #print("\n%r" % self)
