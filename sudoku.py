@@ -121,21 +121,33 @@ class Sudoku:
     def rm_value(self, i, j, val):
         self.grid[i,j].rm_value(val)
 
-    def neigh_values(self, x, y):
+    def neigh_values(self, x, y, coord=False):
         row_result = set()
         for i in range(9):
             if i != x:
-                row_result |= self.grid[i,y].values
+                if coord:
+                    row_result.add((i,y))
+                else:
+                    row_result |= self.grid[i,y].values
         col_result = set()
         for j in range(9):
             if j != y:
-                col_result |= self.grid[x,j].values
+                if coord:
+                    col_result.add((x,j))
+                else:
+                    col_result |= self.grid[x,j].values
         sq_result = set()
         for i in range(3):
             for j in range(3):
                 if i != x%3 or j != y%3:
-                    sq_result |= self.grid[i+3*(x//3),j+3*(y//3)].values
-        return (row_result, col_result, sq_result)
+                    if coord:
+                        sq_result.add((i+3*(x//3),j+3*(y//3)))
+                    else:
+                        sq_result |= self.grid[i+3*(x//3),j+3*(y//3)].values
+        if coord:
+            return row_result | col_result | sq_result
+        else:
+            return (row_result, col_result, sq_result)
 
     def rech_solitaire_nu(self):
         chgt = False
