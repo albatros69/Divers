@@ -5,7 +5,7 @@ I've recently bought a brand new laptop. Now I'm left with the old one (Lenovo
 X121e) which I choose to recycle to watch films or work on the move.
 Unfortunately, I've never setup any data encryption of the disk (my bad)...
 While I could have reinstalled it from scratch, I thought it would be quicker
-to simply create a new LV and move the sensible data onto it (essentially /home).
+to simply create a new LV and move the sensible data onto it (essentially `/home`).
 
 I've been proved wrong, as I didn't find a tutorial to explain how to do this.
 I found documentation to encrypt a whole VG, or others which I didn't manage to
@@ -77,8 +77,10 @@ If everything is correct, you can now copy your data on the encrypted volume:
 
 Once done, you should also erase securely your old data, either with `shred` or
 alike, or more brutally with `dd` or `badblocks`(see above) on the whole volume
-where your data reside. **WARNING** You might lose some data if you don't
-proceed carefully: Backups are your friends here!
+where your data reside. 
+
+> [!CAUTION]
+> You might lose some data if you don't proceed carefully: Backups are your friends here!
 
 ## Mounting the new volume at boot time
 To mount the encrypted volume at boot time, you will need to create (or add to)
